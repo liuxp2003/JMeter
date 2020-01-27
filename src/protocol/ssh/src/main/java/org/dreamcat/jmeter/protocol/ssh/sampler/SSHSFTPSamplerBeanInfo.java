@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.dreamcat.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
@@ -55,9 +56,6 @@ public class SSHSFTPSamplerBeanInfo extends AbstractSSHBeanInfoSupport {
         p = property("destination"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");
-
-
-
     }
 
 }

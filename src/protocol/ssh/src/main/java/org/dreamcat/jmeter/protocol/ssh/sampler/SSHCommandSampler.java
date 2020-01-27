@@ -14,20 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.dreamcat.jmeter.protocol.ssh.sampler;
 
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testbeans.TestBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 /**
  * SSH Sampler that collects single lines of output and returns them as samples result.
@@ -52,8 +55,6 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
     public SampleResult sample(Entry e) {
         SampleResult res = new SampleResult();
         res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
-
-
 
         // Set up sampler return types
         res.setSamplerData(command);
@@ -118,7 +119,7 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
      */
     private String doCommand(Session session, String command, SampleResult res) throws JSchException, IOException {
         StringBuilder sb = new StringBuilder();
-        String Commands [] = command.trim().split("\n");
+        String[] Commands = command.trim().split("\n");
 
         res.sampleStart();
         for (int c = 0; c < Commands.length; c++)

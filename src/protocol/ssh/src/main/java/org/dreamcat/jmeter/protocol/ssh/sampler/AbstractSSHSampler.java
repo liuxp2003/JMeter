@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.dreamcat.jmeter.protocol.ssh.sampler;
+
+import java.io.Serializable;
 
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.testbeans.TestBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 /**
  * Abstract SSH Sampler that manage SSH connexion and delegates sampling.
@@ -156,10 +156,6 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
         this.failureReason = failureReason;
     }
 
-
-
-
-
     @Override
     public void finalize() {
         try {
@@ -175,7 +171,9 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
     }
 
     /**
-     * A private implementation of com.jcraft.jsch.UserInfo. This takes a AbstractSSHSampler when constructed and looks over its data when queried for information. This should only be visible to the SSH Sampler class.
+     * A private implementation of com.jcraft.jsch.UserInfo.
+     * This takes a AbstractSSHSampler when constructed and looks over its data when queried for information.
+     * This should only be visible to the SSH Sampler class.
      */
     private class SSHSamplerUserInfo implements UserInfo, Serializable {
 

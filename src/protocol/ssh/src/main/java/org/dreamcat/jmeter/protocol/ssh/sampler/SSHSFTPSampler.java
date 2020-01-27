@@ -14,22 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.dreamcat.jmeter.protocol.ssh.sampler;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testbeans.TestBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 /**
  * SSH Sampler that collects single lines of output and returns them as samples.
@@ -62,8 +65,6 @@ public class SSHSFTPSampler extends AbstractSSHSampler implements Sampler, TestB
     public SampleResult sample(Entry e) {
         SampleResult res = new SampleResult();
         res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
-
-
 
         // Set up sampler return types
         res.setSamplerData(action + " " + source);

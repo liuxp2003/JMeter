@@ -25,4 +25,4 @@ jobs:
     - name: 'Test'
       shell: bash
       run: |
-        ./gradlew build -x distZip
+        ./gradlew --no-parallel build -x distTar -x distTarSource -Dskip.test_TestDNSCacheManager.testWithCustomResolverAnd1Server=true
