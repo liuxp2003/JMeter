@@ -95,6 +95,17 @@ val gatherBinaryLicenses by tasks.registering(GatherLicenseTask::class) {
         expectedLicense = SpdxLicense.BSD_2_Clause
     }
 
+    overrideLicense("com.jcraft:jsch:0.1.55") {
+        expectedLicense = SimpleLicense(
+            "Revised BSD",
+            uri("http://www.jcraft.com/jsch/LICENSE.txt")
+        )
+        effectiveLicense = SimpleLicense(
+            "Revised BSD",
+            uri("http://www.jcraft.com/jsch/LICENSE.txt")
+        )
+    }
+
     for (mig in listOf("com.miglayout:miglayout-core", "com.miglayout:miglayout-swing")) {
         overrideLicense(mig) {
             expectedLicense = SimpleLicense("BSD", uri("http://www.debian.org/misc/bsd.license"))

@@ -195,6 +195,14 @@ project("native") {
     }
 }
 
+project("ssh") {
+    dependencies {
+        implementation("com.jcraft:jsch") {
+            because("JSch")
+        }
+    }
+}
+
 project("tcp") {
     dependencies {
         implementation("org.apache.commons:commons-lang3") {

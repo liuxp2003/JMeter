@@ -45,6 +45,7 @@ var jars = arrayOf(
         ":src:protocol:mail",
         ":src:protocol:mongodb",
         ":src:protocol:native",
+        ":src:protocol:ssh",
         ":src:protocol:tcp")
 
 // isCanBeConsumed = false ==> other modules must not use the configuration as a dependency

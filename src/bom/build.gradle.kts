@@ -68,6 +68,7 @@ dependencies {
         apiv("com.helger:ph-commons")
         apiv("com.helger:ph-css")
         apiv("com.jayway.jsonpath:json-path")
+        apiv("com.jcraft:jsch")
         apiv("com.miglayout:miglayout-core", "miglayout")
         apiv("com.miglayout:miglayout-swing", "miglayout")
         apiv("com.sun.activation:javax.activation", "javax.activation")
