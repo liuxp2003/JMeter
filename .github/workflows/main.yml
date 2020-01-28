@@ -25,4 +25,4 @@ jobs:
     - name: 'Test'
       shell: bash
       run: |
-        ./gradlew --no-parallel build -x distTar -x distTarSource -Duser.language=en -Duser.country=en -PskipCheckstyle
+        ./gradlew --no-parallel build -x distTar -x distTarSource -Duser.language=en -Duser.region=US -Duser.country=US -Djava.awt.headless=true
