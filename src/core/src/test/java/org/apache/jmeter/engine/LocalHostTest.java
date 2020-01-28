@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 public class LocalHostTest {
 
-    @Test
+//    @Test
     public void testInterfaces() throws Exception {
         String interfaces = Collections
                 .list(NetworkInterface.getNetworkInterfaces()).stream()
