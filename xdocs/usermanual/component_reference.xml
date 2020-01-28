@@ -1952,6 +1952,36 @@ MongoDB Script is more suitable for functional testing or test setup (setup/tear
     </links>
 </component>
 
+<component name="SSH_Command" index="&sect-num;.1.23" width="711" height="488" screenshot="sshcmd-request.png">
+    <description>
+        <p>This sampler allows you to run SSH protocol.</p>
+    </description>
+
+    <properties>
+        <property name="Name" required="No">Descriptive name for this sampler that is shown in the tree.</property>
+        <property name="Comments" required="No">Free text for additional details.</property>
+    </properties>
+
+    <links>
+        <complink name="SSH_Command"/>
+    </links>
+</component>
+
+<component name="SSH_SFTP" index="&sect-num;.1.24" width="711" height="488" screenshot="sftpcmd-request.png">
+    <description>
+        <p>This sampler allows you to run SFTP with SSH protocol.</p>
+    </description>
+
+    <properties>
+        <property name="Name" required="No">Descriptive name for this sampler that is shown in the tree.</property>
+        <property name="Comments" required="No">Free text for additional details.</property>
+    </properties>
+
+    <links>
+        <complink name="SSH_SFTP"/>
+    </links>
+</component>
+
 <a href="#">^</a>
 
 </section>

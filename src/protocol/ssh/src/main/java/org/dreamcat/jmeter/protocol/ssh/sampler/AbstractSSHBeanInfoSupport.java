@@ -28,7 +28,7 @@ public abstract class AbstractSSHBeanInfoSupport extends BeanInfoSupport {
     /**
      * @param beanClass class to create bean info for
      */
-    protected AbstractSSHBeanInfoSupport(Class<? extends TestBean> beanClass) {
+    public AbstractSSHBeanInfoSupport(Class<? extends TestBean> beanClass) {
         super(beanClass);
 
         PropertyDescriptor p;

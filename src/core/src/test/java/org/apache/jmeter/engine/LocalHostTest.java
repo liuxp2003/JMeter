@@ -82,7 +82,7 @@ public class LocalHostTest {
                 + "]";
     }
 
-    @Test
+//    @Test
     public void testLocalHost() throws Exception {
         InetAddress localHost = getLocalHost();
         showAddress(localHost);
