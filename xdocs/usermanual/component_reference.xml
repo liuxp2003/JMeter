@@ -5204,7 +5204,7 @@ the required load.</p>
 <p>For instance, if you want to perform 2-week long test with 5'000 per hour rate, then you probably want to have exactly 5'000 samples
     for each hour. You can set <code>Test duration (seconds)</code> property of the timer of the timer to 1 hour.
     Then the timer would create a schedule of 5'000 samples for an hour, and when the schedule is exhausted, the timer would generate
-    a schedule for the next hour.</p> 
+    a schedule for the next hour.</p>
 <p>At the same time, you can set <code>Test duration (seconds)</code> to 2 weeks, and the timer would generate a schedule with
     <code>168'000 samples = 2 weeks * 5'000 samples/hour = 2*7*24*500</code>. The schedule would take ~30ms to generate, and it would
     consume a little more than 1 megabyte.</p>
