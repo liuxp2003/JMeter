@@ -29,13 +29,14 @@ import java.util.stream.Collectors;
 import org.apache.commons.net.util.SubnetUtils;
 import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 /**
  * Try to establish why some batchtestserver runs fail
  */
 public class LocalHostTest {
 
-//    @Test
+    @Test
     public void testInterfaces() throws Exception {
         String interfaces = Collections
                 .list(NetworkInterface.getNetworkInterfaces()).stream()
@@ -81,7 +82,7 @@ public class LocalHostTest {
                 + "]";
     }
 
-//    @Test
+    @Test
     public void testLocalHost() throws Exception {
         InetAddress localHost = getLocalHost();
         showAddress(localHost);

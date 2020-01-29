@@ -149,7 +149,7 @@ public class TestIfController extends JMeterTestCase {
 
     }
 
-//    @Test
+    @Test
     public void testProcessingTrue() throws Exception {
         LoopController controller = new LoopController();
         controller.setLoops(2);
@@ -280,7 +280,7 @@ public class TestIfController extends JMeterTestCase {
         assertEquals(counter, 6);
     }
 
-//    @Test
+    @Test
     public void shouldIgnoreEmptyLastLine() {
         GenericController controller = new GenericController();
 
