@@ -25,4 +25,4 @@ jobs:
     - name: 'Test'
       shell: bash
       run: |
-        ./gradlew distZip -Duser.language=en -Duser.country=en -Djava.awt.headless=true
+        ./gradlew --no-parallel build -x distTar -Duser.language=en -Duser.region=US -Duser.country=US -Dfile.encoding=UTF-8
