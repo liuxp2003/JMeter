@@ -83,6 +83,7 @@ to view the last release notes of version 5.2.1.
 
 <h3>HTTP Samplers and Test Script Recorder</h3>
 <ul>
+    <li><bug>64160</bug>Test HTTP/S Test Script Recorder: Name transaction controller/ simple controller using prefix without "-XXXX" suffix</li>
 </ul>
 
 <h3>Other samplers</h3>
@@ -95,6 +96,7 @@ to view the last release notes of version 5.2.1.
 
 <h3>Listeners</h3>
 <ul>
+    <li><bug>64150</bug>View Results Tree: Allow editing of response data in testers</li>
 </ul>
 
 <h3>Timers, Assertions, Config, Pre- &amp; Post-Processors</h3>
@@ -119,11 +121,34 @@ to view the last release notes of version 5.2.1.
 <h3>General</h3>
 <ul>
   <li><bug>63458</bug><pr>551</pr>Add new template "Functional Testing Test Plan [01]". Contributed by Sebastian Boga (sebastian.boga at endava.com)</li>
+  <li><bug>64119</bug>Use first renderer from <code>view.results.tree.renderers_order</code> property as default in View Results Tree</li>
+  <li><bug>64148</bug>Use gray icons for disabled elements in the tree, display subtree as gray</li>
 </ul>
 
 <ch_section>Non-functional changes</ch_section>
 <ul>
-    <li><bug>63963</bug><pr>546</pr>Updated jackson to 2.10.1 (from 2.9.10)</li>
+    <li><bug>63963</bug><pr>546</pr>Updated jackson to 2.10.2 (from 2.9.10)</li>
+    <li><bug>64120</bug>Updated jsoup to 1.12.2 (from 1.12.1)</li>
+    <li><bug>63809</bug>Updated commons-dbcp2 to 2.7.0 (from 2.5.0)</li>
+    <li>Updated Apache ActiveMQ to 5.15.11 (from 5.15.8)</li>
+    <li>Updated bouncycastle to 1.64 (from 1.60)</li>
+    <li>Updated asm to 7.3.1 (from 7.1)</li>
+    <li>Updated Apache commons-codec to 1.14 (from 1.13)</li>
+    <li>Updated Apache commons-pool to 2.8.0 (from 2.7.0)</li>
+    <li>Updated equalsverifier to 3.1.9 (from 3.1.12)</li>
+    <li>Updated Apache Groovy to 2.4.18 (from 2.4.16)</li>
+    <li>Updated hsqldb to 2.5.0 (from 2.4.1)</li>
+    <li>Updated hamcrest to 2.2 (from 2.1)</li>
+    <li>Updated Apache httpclient and httpmime to 4.5.11 (from 4.5.10)</li>
+    <li>Updated Apache httpcore and httpcore-nio to 4.4.13 (from 4.4.12)</li>
+    <li>Updated jmespath to 0.5.0 (from 0.3.0)</li>
+    <li>Updated Apache log4j to 2.13.0 (from 2.12.1)</li>
+    <li>Updated junit4 to 4.13 (from 4.12)</li>
+    <li>Updated junit5 to 5.6.0 (from 5.5.1)</li>
+    <li>Updated slf4j to 1.7.30 (from 1.7.28)</li>
+    <li>Updated ph-commons to 9.3.9 (from 9.3.7)</li>
+    <li>Updated rsyntaxtextarea to 3.0.8 (from 3.0.4)</li>
+    <li>Updated rhino to 1.7.12 (from 1.7.11)</li>
 </ul>
 
  <!-- =================== Bug fixes =================== -->
@@ -149,6 +174,7 @@ to view the last release notes of version 5.2.1.
 <h3>Timers, Assertions, Config, Pre- &amp; Post-Processors</h3>
 <ul>
     <li><bug>64091</bug>Precise Throughput Timer might produce less samples when low test duration is used</li>
+    <li><bug>64142</bug>Presence of DebugPostProcessor in Test plan breaks ActiveThread Over time in report due to missing information</li>
 </ul>
 
 <h3>Functions</h3>
@@ -161,6 +187,7 @@ to view the last release notes of version 5.2.1.
 
 <h3>Report / Dashboard</h3>
 <ul>
+    <li><bug>64059</bug>Response Time Percentiles Over Time, unable to change the percentiles</li>
 </ul>
 
 <h3>Documentation</h3>
@@ -168,6 +195,8 @@ to view the last release notes of version 5.2.1.
   <li><pr>547</pr>Correct Log level documentation. Contributed by jmetertea</li>
   <li><pr>548</pr>Correct typos in documentation. Contributed by jmetertea</li>
   <li><bug>64022</bug>Correct Chinese translation for "Ignore Sub-Controller blocks". Provided by yangxiaofei77 (yangxiaofei77 at gmail.com)</li>
+  <li><pr>552</pr>Fix <code>client.rmi.localport</code> port allocation description. Contributed by anant-93</li>
+  <li><pr>543</pr>Clarify documentation of <code>__StringToFile</code> function regarding default value of <code>Append to file?</code> parameter. Contributed by Ori Marko</li>
 </ul>
 
 <h3>General</h3>
@@ -187,6 +216,8 @@ to view the last release notes of version 5.2.1.
   <li>ray7219</li>
   <li>Sebastian Boga (sebastian.boga at endava.com)</li>
   <li>Liu XP (liu_xp2003 at sina.com)</li>
+  <li>anant-93 (https://github.com/anant-93)</li>
+  <li>Ori Marko (orimarko at gmail.com)</li>
 </ul>
 <p>We also thank bug reporters who helped us improve JMeter.</p>
 <ul>

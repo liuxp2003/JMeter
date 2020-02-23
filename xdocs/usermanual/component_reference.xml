@@ -5125,7 +5125,7 @@ Note that the throughput value should not be changed too often during a test
 </properties>
 </component>
 
-<component name="Precise Throughput Timer" index="&sect-num;.6.5" width="523" height="318" screenshot="timers/precise_throughput_timer.png">
+<component name="Precise Throughput Timer" index="&sect-num;.6.5" width="573" height="407" screenshot="timers/precise_throughput_timer.png">
 <description><p>This timer introduces variable pauses, calculated to keep the total throughput (e.g. in terms of samples per minute) as close as possible to a give figure. Of course the throughput will be lower if the server is not capable of handling it, or if other timers, or if there's not enough threads, or time-consuming test elements prevent it.</p>
 <p>Although the Timer is called Precise Throughput Timer, it does not aim to produce precisely the same number of samples over one-second intervals during the test.</p>
 <p>The timer works best for rates under 36000 requests/hour, however your mileage might vary (see monitoring section below if your goals are
