@@ -19,7 +19,7 @@ package org.dreamcat.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
 
-public class SSHSFTPSamplerBeanInfo extends AbstractSSHBeanInfoSupport {
+public class SSHSFTPSamplerBeanInfo extends AbstractSSHSamplerBeanInfo {
 
     public SSHSFTPSamplerBeanInfo() {
 
@@ -56,6 +56,7 @@ public class SSHSFTPSamplerBeanInfo extends AbstractSSHBeanInfoSupport {
         p = property("destination"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");
+
     }
 
 }

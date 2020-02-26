@@ -24,9 +24,6 @@ import java.util.List;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.samplers.Sampler;
-import org.apache.jmeter.testbeans.TestBean;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jcraft.jsch.ChannelSftp;
@@ -35,24 +32,23 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 /**
- * SSH Sampler that collects single lines of output and returns them as samples.
+ * SSH Sampler that collects single lines of output and returns
+ * them as samples.
+ *
  */
-public class SSHSFTPSampler extends AbstractSSHSampler implements Sampler, TestBean {
+public class SSHSFTPSampler extends AbstractSSHSampler {
 
-    private static final Logger log = LoggerFactory.getLogger(SSHSFTPSampler.class);
+    private static final long serialVersionUID = 234L;
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(SSHSFTPSampler.class);
     public static final String SFTP_COMMAND_GET = "get";
     public static final String SFTP_COMMAND_PUT = "put";
     public static final String SFTP_COMMAND_RM = "rm";
     public static final String SFTP_COMMAND_RMDIR = "rmdir";
     public static final String SFTP_COMMAND_LS = "ls";
     public static final String SFTP_COMMAND_RENAME = "ls";
-
     private String source;
-
     private String destination;
-
     private String action;
-
     private boolean printFile = true;
 
     public SSHSFTPSampler() {
@@ -173,6 +169,7 @@ public class SSHSFTPSampler extends AbstractSSHSampler implements Sampler, TestB
         return sb.toString();
     }
 
+    // Accessors
     public String getDestination() {
         return destination;
     }

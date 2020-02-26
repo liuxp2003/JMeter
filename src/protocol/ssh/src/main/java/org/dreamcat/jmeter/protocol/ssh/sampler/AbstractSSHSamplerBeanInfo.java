@@ -20,29 +20,13 @@ package org.dreamcat.jmeter.protocol.ssh.sampler;
 import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jmeter.testbeans.TestBean;
+import org.apache.jmeter.testbeans.gui.FileEditor;
 import org.apache.jmeter.testbeans.gui.TypeEditor;
 
-public abstract class AbstractSSHBeanInfoSupport extends BeanInfoSupport {
+public abstract class AbstractSSHSamplerBeanInfo extends BeanInfoSupport {
 
-    /**
-     * @param beanClass class to create bean info for
-     */
-    public AbstractSSHBeanInfoSupport(Class<? extends TestBean> beanClass) {
-        super(beanClass);
-
-        PropertyDescriptor p;
-        p = property("hostname"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-
-        p = property("port"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Integer.valueOf(22));
-
-        p = property("connectionTimeout");
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Integer.valueOf(5000));
+    public AbstractSSHSamplerBeanInfo(Class<? extends AbstractSSHSampler> clazz) {
+        super(clazz);
 
         createPropertyGroup("server", // $NON-NLS-1$
                 new String[]{
@@ -51,6 +35,19 @@ public abstract class AbstractSSHBeanInfoSupport extends BeanInfoSupport {
                     "connectionTimeout"
                 });
 
+        createPropertyGroup("user", // $NON-NLS-1$
+                new String[]{
+                    "username", // $NON-NLS-1$
+                    "password" // $NON-NLS-1$
+                });
+
+        createPropertyGroup("keyFile",
+                new String[]{
+                    "sshkeyfile", // $NON-NLS-1$
+                    "passphrase" // $NON-NLS-1$
+                });
+
+        PropertyDescriptor p;
         p = property("username"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");
@@ -59,12 +56,26 @@ public abstract class AbstractSSHBeanInfoSupport extends BeanInfoSupport {
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");
 
-        createPropertyGroup("user", // $NON-NLS-1$
-                new String[]{
-                    "username", // $NON-NLS-1$
-                    "password" // $NON-NLS-1$
-                });
+        p = property("sshkeyfile");
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, "");
+        p.setPropertyEditorClass(FileEditor.class);
 
+        p = property("passphrase");
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, "");
+
+        p = property("hostname"); // $NON-NLS-1$
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, "");
+
+        p = property("port"); // $NON-NLS-1$
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, 22);
+
+        p = property("connectionTimeout");
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, 5000);
 
     }
 }

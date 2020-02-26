@@ -21,16 +21,22 @@ import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.gui.TextAreaEditor;
 
-public class SSHCommandSamplerBeanInfo extends AbstractSSHBeanInfoSupport {
-
+public class SSHCommandSamplerBeanInfo extends AbstractSSHSamplerBeanInfo {
 
     public SSHCommandSamplerBeanInfo() {
 
         super(SSHCommandSampler.class);
 
+        createPropertyGroup("execute", new String[]{
+                    "command", // $NON-NLS-1$
+                    "useReturnCode", // $NON-NLS-1$
+                    "useTty", // $NON-NLS-1$
+                    "printStdErr" // $NON-NLS-1$
+                });
+
         PropertyDescriptor p = property("command"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
+        p.setValue(DEFAULT, "date");
         p.setPropertyEditorClass(TextAreaEditor.class);
         p.setValue(TEXT_LANGUAGE, "shell");  // $NON-NLS-1$
 
@@ -38,15 +44,13 @@ public class SSHCommandSamplerBeanInfo extends AbstractSSHBeanInfoSupport {
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, Boolean.TRUE);
 
-        p = property("printStdErr"); // $NON-NLS-1$
+        p = property("useTty"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, Boolean.FALSE);
 
-        createPropertyGroup("execute", new String[]{
-                    "command", // $NON-NLS-1$
-                    "useReturnCode", // $NON-NLS-1$
-                    "printStdErr" // $NON-NLS-1$
-                });
+        p = property("printStdErr"); // $NON-NLS-1$
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, Boolean.TRUE);
 
     }
 

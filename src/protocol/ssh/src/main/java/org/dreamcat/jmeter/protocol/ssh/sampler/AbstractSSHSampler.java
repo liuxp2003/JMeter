@@ -27,31 +27,29 @@ import org.slf4j.LoggerFactory;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
 
 /**
- * Abstract SSH Sampler that manage SSH connexion and delegates sampling.
+ * Abstract SSH Sampler that manage SSH connexion and delegates
+ * sampling.
+ *
  */
 public abstract class AbstractSSHSampler extends AbstractSampler implements TestBean {
 
     private static final long serialVersionUID = 234L;
     private static final Logger log = LoggerFactory.getLogger(AbstractSSHSampler.class);
-
     private String hostname = "";
-
     private int port = 22;
-
     private String username = "";
-
     private String password = "";
-
+    private String sshkeyfile = "";
+    private String passphrase = "";
     private int connectionTimeout = 5000;
 
     private String failureReason = "Unknown";
     private static final JSch jsch = new JSch();
-
     private Session session = null;
-
     private SSHSamplerUserInfo userinfo = null;
 
     public AbstractSSHSampler(String name) {
@@ -69,8 +67,11 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
             session = jsch.getSession(getUsername(), getHostname(), getPort());
             // session.setPassword(getPassword()); // Use a userinfo instead
             session.setUserInfo(userinfo);
+            if (userinfo.useKeyFile()) {
+                jsch.addIdentity(getSshkeyfile());
+            }
             session.setConfig("StrictHostKeyChecking", "no");
-            session.setConfig("kex", "diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp521");
+            session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             session.connect(connectionTimeout);
         } catch (JSchException e) {
             failureReason = e.getMessage();
@@ -86,71 +87,74 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
         }
     }
 
+    // Accessors
+    public void setSshkeyfile(String sshKeyFile) {
+        this.sshkeyfile = sshKeyFile;
+    }
+
+    public String getSshkeyfile() {
+        return sshkeyfile;
+    }
+
+    public void setPassphrase(String passphrase) {
+        this.passphrase = passphrase;
+    }
+
+    public String getPassphrase() {
+        return passphrase;
+    }
 
     public String getHostname() {
         return hostname;
     }
 
-
     public void setHostname(String server) {
         this.hostname = server;
     }
-
 
     public int getPort() {
         return port;
     }
 
-
     public void setPort(int port) {
         this.port = port;
     }
-
 
     public String getUsername() {
         return username;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getPassword() {
         return password;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public int getConnectionTimeout() {
         return connectionTimeout;
     }
 
-
     public void setConnectionTimeout(int connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
-
 
     protected Session getSession() {
         return session;
     }
 
-
     protected void setSession(Session session) {
         this.session = session;
     }
 
-
     protected String getFailureReason() {
         return failureReason;
     }
-
 
     public void setFailureReason(String failureReason) {
         this.failureReason = failureReason;
@@ -171,13 +175,11 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
     }
 
     /**
-     * A private implementation of com.jcraft.jsch.UserInfo.
-     * This takes a AbstractSSHSampler when constructed and looks over its data when queried for information.
-     * This should only be visible to the SSH Sampler class.
+     * A private implementation of com.jcraft.jsch.UserInfo. This takes a AbstractSSHSampler when constructed
+     * and looks over its data when queried for information. This should only be visible to the SSH Sampler
+     * class.
      */
-    private class SSHSamplerUserInfo implements UserInfo, Serializable {
-
-        private static final long serialVersionUID = 234L;
+    private class SSHSamplerUserInfo implements UserInfo, Serializable, UIKeyboardInteractive {
 
         private AbstractSSHSampler owner;
 
@@ -186,7 +188,11 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
         }
 
         public String getPassphrase() {
-            return null;
+            String retval = owner.getPassphrase();
+            if ((retval.length() == 0) && !useKeyFile()) {
+                retval = null;
+            }
+            return retval;
         }
 
         public String getPassword() {
@@ -214,6 +220,28 @@ public abstract class AbstractSSHSampler extends AbstractSampler implements Test
             return;
         }
 
-    }
+        /*
+         * These are not part of the UserInfo interface, but since this object can inspect its owner's data
+         * it seems cleaner to just ask it to figure out what the user wants to do, rather than cluttering
+         * the sampler code with this.
+         */
+        /**
+         * useKeyFile returns true if owner.sshkeyfile is not empty
+         */
+        public boolean useKeyFile() {
+            return owner.getSshkeyfile().length() > 0;
+        }
+
+        @Override
+        public String[] promptKeyboardInteractive(String destination, String name, String instruction, String[] prompt,
+                                                  boolean[] echo) {
+            if (prompt.length != 1 || echo[0] || this.getPassword() == null) {
+                return null;
+            }
+            String[] response = new String[1];
+            response[0] = this.getPassword();
+            return response;
+        }
+    } /* Class SSHSamplerUserInfo */
 
 }

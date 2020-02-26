@@ -23,8 +23,6 @@ import java.io.InputStreamReader;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.samplers.Sampler;
-import org.apache.jmeter.testbeans.TestBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +31,18 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 /**
- * SSH Sampler that collects single lines of output and returns them as samples result.
+ * SSH Sampler that collects single lines of output and returns
+ * them as samples.
+ *
  */
-public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, TestBean {
+public class SSHCommandSampler extends AbstractSSHSampler {
 
+    private static final long serialVersionUID = 234L;
     private static final Logger log = LoggerFactory.getLogger(SSHCommandSampler.class);
 
     private String command = "date";
-
     private boolean useReturnCode = true;
-
+    private boolean useTty = true;
     private boolean printStdErr = true;
 
     public SSHCommandSampler() {
@@ -105,14 +105,13 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
     }
 
     /**
-     * Executes the given commands inside a short-lived channel in the session.
+     * Executes a the given command inside a short-lived channel in the session.
      *
      * Performance could be likely improved by reusing a single channel, though
      * the gains would be minimal compared to sharing the Session.
      *
      * @param session Session in which to create the channel
      * @param command Command to send to the server for execution
-     * @param res SampleResult stored various information returned from taking a sample of an entry
      * @return All standard output from the command
      * @throws JSchException
      * @throws IOException Error has occurred down in the network layer
@@ -121,17 +120,18 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
         StringBuilder sb = new StringBuilder();
         String[] Commands = command.trim().split("\n");
 
+
         res.sampleStart();
-        for (int c = 0; c < Commands.length; c++)
-        {
+        for (int c = 0; c < Commands.length; c++) {
             ChannelExec channel = (ChannelExec) session.openChannel("exec");
             BufferedReader br = new BufferedReader(new InputStreamReader(channel.getInputStream()));
             BufferedReader err = new BufferedReader(new InputStreamReader(channel.getErrStream()));
+            channel.setPty(useTty);
             channel.setCommand(Commands[c]);
             channel.connect();
 
             if(printStdErr){
-                sb.append("=== stdin ===\n");
+                sb.append("=== ").append(Commands[c]).append(" stdin ===\n");
             }
 
             for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -140,11 +140,22 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
             }
 
             if(printStdErr){
-                sb.append("\n=== stderr ===\n");
+                sb.append("\n\n=== stderr ===\n");
                 for (String line = err.readLine(); line != null; line = err.readLine()) {
                     sb.append(line);
                     sb.append("\n");
                 }
+            }
+
+            while (true) {
+                if (channel.isClosed()) {
+                    break;
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (Exception ee){
+                    //Do Nothing
+                };
             }
 
             if(useReturnCode){
@@ -153,11 +164,14 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
                 res.setResponseCodeOK();
             }
             channel.disconnect();
+            br.close();
+            err.close();
         }
         res.sampleEnd();
         return sb.toString();
     }
 
+    // Accessors
     public String getCommand() {
         return command;
     }
@@ -181,4 +195,13 @@ public class SSHCommandSampler extends AbstractSSHSampler implements Sampler, Te
     public void setUseReturnCode(boolean useReturnCode) {
         this.useReturnCode = useReturnCode;
     }
+
+    public boolean getUseTty() {
+        return useTty;
+    }
+
+    public void setUseTty(boolean useTty) {
+        this.useTty = useTty;
+    }
+
 }
