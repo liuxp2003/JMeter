@@ -48,6 +48,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -66,11 +67,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.gui.GUIMenuSortOrder;
+import org.apache.jmeter.gui.TestElementMetadata;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
+import org.apache.jorphan.gui.JMeterUIDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,6 +81,7 @@ import org.slf4j.LoggerFactory;
  * Base for ViewResults
  */
 @GUIMenuSortOrder(1)
+@TestElementMetadata(labelResource = "view_results_tree_title")
 public class ViewResultsFullVisualizer extends AbstractVisualizer
 implements ActionListener, TreeSelectionListener, Clearable, ItemListener {
 
@@ -514,12 +518,14 @@ implements ActionListener, TreeSelectionListener, Clearable, ItemListener {
                 if (rightSide != null) {
                     // to restore last selected tab (better user-friendly)
                     selectedTab = rightSide.getSelectedIndex();
-                    // Remove old right side
+                    // Remove old right side and keep the position of the divider
+                    int dividerLocation = mainSplit.getDividerLocation();
                     mainSplit.remove(rightSide);
 
-                    // create and add a new right side
+                    // create and add a new right side at the old position
                     rightSide = new JTabbedPane();
                     mainSplit.add(rightSide);
+                    mainSplit.setDividerLocation(dividerLocation);
                     resultsRender.setRightSide(rightSide);
                     resultsRender.setLastSelectedTab(selectedTab);
                     log.debug("selectedTab={}", selectedTab);
@@ -575,7 +581,7 @@ implements ActionListener, TreeSelectionListener, Clearable, ItemListener {
 
             // Set the status for the node
             if (failure) {
-                this.setForeground(Color.red);
+                this.setForeground(UIManager.getColor(JMeterUIDefaults.LABEL_ERROR_FOREGROUND));
                 this.setIcon(imageFailure);
             } else {
                 this.setIcon(imageSuccess);
